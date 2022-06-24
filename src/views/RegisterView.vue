@@ -1,11 +1,16 @@
 <script setup lang="ts">
 // import
 import { ref } from "vue";
-import type { Ref } from "vue";
 import { useSignUp } from "@/composables/useSignUp";
+import { useRouter } from "vue-router";
+
+import type { Ref } from "vue";
+import type { Router } from "vue-router";
 import loading from "@/assets/images/loading.gif";
+
 // use
 const { error, isPending, signUp } = useSignUp();
+const router: Router = useRouter();
 // ref
 const fullName: Ref<string> = ref("");
 const email: Ref<string> = ref("");
@@ -13,6 +18,7 @@ const password: Ref<string> = ref("");
 
 const onSubmit = async () => {
   await signUp(email.value, password.value, fullName.value);
+  if (!error.value) router.push({ name: "Home", params: {} });
 };
 </script>
 

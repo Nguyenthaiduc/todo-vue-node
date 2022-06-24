@@ -1,13 +1,23 @@
 <script setup lang="ts">
 // import
 import { ref } from "vue";
+import { useSignIn } from "@/composables/useSignIn";
+import { useRouter } from "vue-router";
+
 import type { Ref } from "vue";
+import type { Router } from "vue-router";
+import loading from "@/assets/images/loading.gif";
+
+// use
+const { error, isPending, signIn } = useSignIn();
+const router: Router = useRouter();
 // ref
 const email: Ref<string> = ref("");
 const password: Ref<string> = ref("");
 // handle
-const onSubmit = () => {
-  console.log({ email, password });
+const onSubmit = async () => {
+  await signIn(email.value, password.value);
+  if (!error.value) router.push({ name: "Home", params: {} });
 };
 </script>
 
@@ -46,25 +56,44 @@ const onSubmit = () => {
               v-model="password"
             />
           </label>
-        </div> 
+        </div>
         <!---->
         <div class="row">
           <button
+            v-if="!isPending"
             type="submit"
-            class="px-3 w-80 h-12 rounded-xl bg-primary text-white font-bold"
+            class="px-3 w-80 h-12 rounded-xl bg-primary text-white font-bold hover:bg-sky-600"
           >
             Sign In
+          </button>
+          <!---->
+          <button
+            v-else
+            type="button"
+            class="px-3 w-80 h-12 rounded-xl bg-sky-600 text-white font-bold cursor-not-allowed"
+            disabled
+          >
+            <img
+              class="w-10 h-10 items-center text-center ml-auto mr-auto"
+              :src="loading"
+            />
           </button>
         </div>
       </form>
       <!--END FORM-->
+
+      <!--START ERROR-->
+      <div v-if="error" class="text-center text-red mt-4">
+        <span>{{ error }}</span>
+      </div>
+      <!--END ERROR-->
       <div class="w-full text-center mt-6">
         <span class="font-semibold">I'm New Acount.</span>
         <span class="ml-1">
           <router-link
             :to="{ name: 'Register', params: {} }"
             class="text-primary font-bold"
-            >Sign In</router-link
+            >Sign Up</router-link
           >
         </span>
       </div>
