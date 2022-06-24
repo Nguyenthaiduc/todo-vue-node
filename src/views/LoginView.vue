@@ -1,6 +1,14 @@
 <script setup lang="ts">
 // import
-const onSubmit = () => {};
+import { ref } from "vue";
+import type { Ref } from "vue";
+// ref
+const email: Ref<string> = ref("");
+const password: Ref<string> = ref("");
+// handle
+const onSubmit = () => {
+  console.log({ email, password });
+};
 </script>
 
 <template>
@@ -21,6 +29,7 @@ const onSubmit = () => {};
               type="email"
               placeholder="Enter Your Email..."
               autocomplete="username"
+              v-model="email"
             />
           </label>
         </div>
@@ -33,9 +42,11 @@ const onSubmit = () => {};
               class="px-4 py-3 rounded-lg border border-gray-100 mt-1 w-80 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
               type="password"
               placeholder="Enter Your Password..."
+              autocomplete="current-password"
+              v-model="password"
             />
           </label>
-        </div>
+        </div> 
         <!---->
         <div class="row">
           <button
