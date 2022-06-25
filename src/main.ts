@@ -11,13 +11,13 @@ import { projectAuth } from "@/config/firebase";
 let app : Application;
 projectAuth.onAuthStateChanged(() => {
   if (!app) {
-    
     const app = createApp(App);
-
+    
     app.use(registerGlobalComponent);
-
+    
     app.use(router);
-
+    
     app.mount("#app");
-  }
+
+  } 
 });

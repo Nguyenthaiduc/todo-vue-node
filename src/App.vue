@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { RouterLink, RouterView, useRoute } from 'vue-router'
-import HelloWorld from '@/components/HelloWorld.vue'
 import { PUBLIC_LAYOUT } from '@/constants';
 import { computed } from 'vue';
 

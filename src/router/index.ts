@@ -2,10 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 import type { RouteLocationNormalized } from "vue-router";
 import { projectAuth } from "@/config/firebase";
 //Auth Guard
-const requireAuth = (to: RouteLocationNormalized, from: RouteLocationNormalized,next: Function) => {
+const requireAuth = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: Function) => {
   const user = projectAuth.currentUser;
 
-  console.log("Enter",user)
   if(!user) next({name: 'Login', params: {}})
   else next();
 }

@@ -1,8 +1,29 @@
 <script setup lang="ts">
-import TheWelcome from "@/components/TheWelcome.vue";
+// import
+import { ref } from "vue";
+import type { Ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUser } from "@/composables/useUser";
-
+import axios from "axios";
+import AddTodoVue from "@/components/AddTodo.vue";
+import TodoItem from "@/components/TodoItem.vue";
+// def type
+interface TypeTodo {
+  id?: number;
+  title?: string;
+  completed?: boolean;
+  description?: string;
+  userId?: string;
+  createAt?: Date;
+  updatedAt?: Date;
+}
+interface CreateTodo {
+  title?: string;
+  completed?: boolean;
+}
+// ref
+const todos: Ref<Array<TypeTodo>> = ref([]);
+// router
 const router = useRouter();
 
 const onLogout = () => {
@@ -13,11 +34,48 @@ const { getUser } = useUser();
 const { user }: any = getUser();
 
 console.log({ user });
+// handle
+//get Data
+const getAllTodos = async () => {
+  try {
+    const res = await axios.get("http://localhost:3000/todo");
+    todos.value = res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+getAllTodos();
+//handle
+const markComplete = async (id: number) => {
+  todos.value = todos.value.map((todo) => {
+    if (todo.id === id) todo.completed = !todo.completed;
+    return todo;
+  });
+};
+const deleteTodo = async (id: number) => {
+  try {
+    await axios.delete(`http://localhost:3000/todo/${id}`);
+    // TODO
+    todos.value = todos.value.filter((todo) => todo.id !== id);
+    console.log(todos);
+  } catch (err) {
+    console.log(err);
+  }
+  //todos.value = todos.value.filter(todo=> todo.id !== id)
+};
+const addTodo = async (newTodo: CreateTodo) => {
+  try {
+    const res = await axios.post("http://localhost:3000/todo", newTodo);
+    todos.value.push(res.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
 </script>
 
 <template>
   <main>
-    <div v-if="user" class="mt-6">{{ user.displayName }}</div>
+    <div v-if="user" class="mt-6">{{ user?.displayName }}</div>
     <div class="row">
       <button
         type="submit"
@@ -27,6 +85,17 @@ console.log({ user });
         Logout
       </button>
     </div>
-    <TheWelcome />
+
+    <add-todo-vue @add-todo="addTodo" />
+
+    <div class="mt-4">
+      <todo-item
+        v-for="todo in todos"
+        :key="todo.id"
+        :todoProps="todo"
+        @item-completed="markComplete"
+        @delete-item="deleteTodo"
+      />
+    </div>
   </main>
 </template>
