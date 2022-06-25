@@ -1,5 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
+import type { RouteLocationNormalized } from "vue-router";
+import { projectAuth } from "@/config/firebase";
+//Auth Guard
+const requireAuth = (to: RouteLocationNormalized, from: RouteLocationNormalized,next: Function) => {
+  const user = projectAuth.currentUser;
 
+  console.log("Enter",user)
+  if(!user) next({name: 'Login', params: {}})
+  else next();
+}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,6 +17,7 @@ const router = createRouter({
       path: "/",
       name: "Home",
       component: () => import("@/views/HomeView.vue"),
+      beforeEnter: requireAuth
     },
     {
       path: "/register",
@@ -26,6 +36,12 @@ const router = createRouter({
       },
 
       component: () => import("@/views/LoginView.vue"),
+    },
+    {
+      path: "/logout",
+      name: "Logout",
+
+      component: () => import("@/views/LogoutView.vue"),
     },
   ],
 });
