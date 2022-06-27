@@ -33,7 +33,7 @@ const onLogout = () => {
 const { getUser } = useUser();
 const { user } = getUser();
 // onBeforeMount(async () => {
-//   console.log(user);
+console.log("User", user?.value?.uid);
 // });
 
 // handle

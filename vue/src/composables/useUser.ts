@@ -6,7 +6,7 @@ import type firebase from "firebase/app";
 
 type User = firebase.User;
 
-const user: Ref<User | null> = ref(projectAuth.currentUser);
+const user: Ref<User | null > = ref(projectAuth.currentUser);
 
 projectAuth.onAuthStateChanged(function (_user) {
   if (_user) user.value = _user;

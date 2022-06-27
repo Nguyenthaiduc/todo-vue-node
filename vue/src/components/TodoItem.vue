@@ -33,7 +33,7 @@ const deleteItem = () => {
 <template>
   <div
     :class="[
-      'flex mb-4 ml-auto mr-auto items-center justify-between p-2.5  text-gray-900 font-semibold w-1/2 rounded-l border-b bg-zinc-300',
+      'flex  w-3/4 sm:w-3/4 md:w-3/4 lg:w-1/2  mb-4 ml-auto mr-auto items-center justify-between p-2.5  text-gray-900 font-semiboldrounded-l border-b bg-zinc-300',
       todoProps.completed ? 'line-through decoration-cyan-700 opacity-70' : '',
     ]"
   >
