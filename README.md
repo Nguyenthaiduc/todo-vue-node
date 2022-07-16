@@ -6,7 +6,7 @@ Todo App using Vue 3 + Nestjs
 $ npm run dev
 $ npm run build
 ```
-## Nodejs
+## Nodejs Framework
 ```
 $ npm run start:dev
 $ npm run start:prod
