@@ -7,6 +7,7 @@ import "./assets/styles/global.css";
 import { registerGlobalComponent } from "@/utils/import";
 import { projectAuth } from "@/config/firebase";
 import axios from "axios";
+
 axios.defaults.baseURL = "https://api-todo-nest.herokuapp.com/";
 
 let app: unknown;
