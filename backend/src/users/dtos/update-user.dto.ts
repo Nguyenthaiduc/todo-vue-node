@@ -10,4 +10,6 @@ export class UpdateUserDto {
     @IsString()
     @IsOptional()
     readonly password : string;
+
 }
+//abc
