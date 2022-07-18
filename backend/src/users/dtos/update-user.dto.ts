@@ -5,9 +5,11 @@ export class UpdateUserDto {
 
     @IsEmail()
     @IsOptional()
-    email : string;
+    readonly email : string;
 
     @IsString()
     @IsOptional()
-    password : string;
+    readonly password : string;
+
 }
+//abc

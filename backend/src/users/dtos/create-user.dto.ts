@@ -2,9 +2,9 @@
 import { IsEmail, IsString,IsNotEmpty } from 'class-validator';
 export class CreateUserDto {
     @IsEmail()
-    email: string;
+    readonly email: string;
 
     @IsNotEmpty()
     @IsString()
-    password: string;
+    readonly password: string;
 }
